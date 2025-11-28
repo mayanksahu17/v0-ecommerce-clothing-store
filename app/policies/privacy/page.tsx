@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Introduction</h2>
               <p>
-                Urban Thread Co. ("we" or "us" or "our") operates the website. This page informs you of our policies
+                Medhuea Store ("we" or "us" or "our") operates the website. This page informs you of our policies
                 regarding the collection, use, and disclosure of personal data when you use our Service.
               </p>
             </section>
@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Use of Data</h2>
-              <p>Urban Thread Co. uses the collected data for various purposes:</p>
+              <p>Medhuea Store uses the collected data for various purposes:</p>
               <ul className="list-disc list-inside space-y-2">
                 <li>To provide and maintain our Service</li>
                 <li>To notify you about changes to our Service</li>
@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
-              <p>If you have any questions about this Privacy Policy, please contact us at hello@urbanthread.co</p>
+              <p>If you have any questions about this Privacy Policy, please contact us at hello@medhueastore.com</p>
             </section>
           </div>
         </div>

@@ -8,10 +8,10 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Urban Thread Co. | Premium Clothing",
+  title: "Medhuea Store | Premium Clothing",
   description: "Discover modern minimal luxury fashion. Premium clothing crafted for contemporary lifestyles.",
   openGraph: {
-    title: "Urban Thread Co. | Premium Clothing",
+    title: "Medhuea Store | Premium Clothing",
     description: "Discover modern minimal luxury fashion.",
     type: "website",
   },

@@ -55,7 +55,7 @@ export default function ShippingPolicyPage() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
-              <p>For shipping inquiries, please contact us at hello@urbanthread.co</p>
+              <p>For shipping inquiries, please contact us at hello@medhueastore.com</p>
             </section>
           </div>
         </div>

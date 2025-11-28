@@ -110,10 +110,10 @@ export default function ContactPage() {
             <div className="text-center">
               <h3 className="text-lg font-light mb-2">Email</h3>
               <a
-                href="mailto:hello@urbanthread.co"
+                href="mailto:hello@medhueastore.com"
                 className="text-sm text-muted-foreground hover:text-accent transition"
               >
-                hello@urbanthread.co
+                hello@medhueastore.com
               </a>
             </div>
             <div className="text-center">

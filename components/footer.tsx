@@ -9,8 +9,8 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex flex-col mb-4">
-              <span className="text-lg font-light tracking-widest">URBAN</span>
-              <span className="text-lg font-light tracking-widest">THREAD</span>
+              <span className="text-lg font-light tracking-widest">MEDHUEA</span>
+              <span className="text-lg font-light tracking-widest">STORE</span>
             </div>
             <p className="text-xs text-muted-foreground">Premium minimal fashion for modern lifestyles.</p>
           </div>
@@ -99,7 +99,7 @@ export function Footer() {
 
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-muted-foreground">© 2025 Urban Thread Co. All rights reserved.</p>
+            <p className="text-xs text-muted-foreground">© 2025 Medhuea Store. All rights reserved.</p>
             <div className="flex gap-4">
               <Link href="#" className="hover:text-accent transition">
                 <Instagram size={16} />

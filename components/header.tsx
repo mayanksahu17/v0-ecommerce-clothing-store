@@ -17,8 +17,8 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
             <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-light tracking-widest">URBAN</span>
-              <span className="text-lg sm:text-xl font-light tracking-widest">THREAD</span>
+              <span className="text-lg sm:text-xl font-light tracking-widest">MEDHUEA</span>
+              <span className="text-lg sm:text-xl font-light tracking-widest">STORE</span>
             </div>
           </Link>
 

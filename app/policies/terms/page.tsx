@@ -23,7 +23,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-light text-foreground">Use License</h2>
               <p>
                 Permission is granted to temporarily download one copy of the materials (information or software) on
-                Urban Thread Co.'s website for personal, non-commercial transitory viewing only. This is the grant of a
+                Medhuea Store's website for personal, non-commercial transitory viewing only. This is the grant of a
                 license, not a transfer of title, and under this license you may not:
               </p>
               <ul className="list-disc list-inside space-y-2">
@@ -38,7 +38,7 @@ export default function TermsPage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Disclaimer</h2>
               <p>
-                The materials on Urban Thread Co.'s website are provided on an 'as is' basis. Urban Thread Co. makes no
+                The materials on Medhuea Store's website are provided on an 'as is' basis. Medhuea Store makes no
                 warranties, expressed or implied, and hereby disclaims and negates all other warranties including,
                 without limitation, implied warranties or conditions of merchantability, fitness for a particular
                 purpose, or non-infringement of intellectual property or other violation of rights.
@@ -48,15 +48,15 @@ export default function TermsPage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Limitations</h2>
               <p>
-                In no event shall Urban Thread Co. or its suppliers be liable for any damages (including, without
+                In no event shall Medhuea Store or its suppliers be liable for any damages (including, without
                 limitation, damages for loss of data or profit, or due to business interruption) arising out of the use
-                or inability to use the materials on Urban Thread Co.'s website.
+                or inability to use the materials on Medhuea Store's website.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
-              <p>If you have any questions about these Terms & Conditions, please contact us at hello@urbanthread.co</p>
+              <p>If you have any questions about these Terms & Conditions, please contact us at hello@medhueastore.com</p>
             </section>
           </div>
         </div>

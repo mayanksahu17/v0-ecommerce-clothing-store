@@ -91,7 +91,7 @@ export default function SupportPage() {
               <div>
                 <h3 className="text-lg font-light mb-2">How can I contact customer service?</h3>
                 <p className="text-sm text-muted-foreground">
-                  You can reach us via email at hello@urbanthread.co or call +1 (234) 567-890. We're available Mon -
+                  You can reach us via email at hello@medhueastore.com or call +1 (234) 567-890. We're available Mon -
                   Fri, 9AM - 6PM EST.
                 </p>
               </div>

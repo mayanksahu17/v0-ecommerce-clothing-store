@@ -14,7 +14,7 @@ export default function RefundPolicyPage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Returns & Refunds</h2>
               <p>
-                At Urban Thread Co., we want you to be completely satisfied with your purchase. If you're not entirely
+                At Medhuea Store, we want you to be completely satisfied with your purchase. If you're not entirely
                 happy with an item, we offer a 30-day returns policy.
               </p>
             </section>
@@ -48,7 +48,7 @@ export default function RefundPolicyPage() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
-              <p>For questions about returns and refunds, please contact us at hello@urbanthread.co</p>
+              <p>For questions about returns and refunds, please contact us at hello@medhueastore.com</p>
             </section>
           </div>
         </div>

@@ -8,16 +8,16 @@ export default function AboutPage() {
 
       <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto space-y-12">
-          <h1 className="text-4xl font-light">About Urban Thread Co.</h1>
+          <h1 className="text-4xl font-light">About Medhuea Store</h1>
 
           <div className="bg-secondary aspect-video overflow-hidden">
-            <img src="/urban-thread-co-luxury-fashion-brand-minimal-studi.jpg" alt="About" className="w-full h-full object-cover" />
+            <img src="/urban-thread-co-luxury-fashion-brand-minimal-studi.jpg" alt="About Medhuea Store" className="w-full h-full object-cover" />
           </div>
 
           <div className="space-y-6">
             <h2 className="text-2xl font-light">Our Story</h2>
             <p className="text-muted-foreground leading-relaxed">
-              Urban Thread Co. was founded with a vision to create premium fashion that celebrates minimalism and
+              Medhuea Store was founded with a vision to create premium fashion that celebrates minimalism and
               quality craftsmanship. We believe that timeless design and sustainable practices go hand in hand, and
               we're committed to offering pieces that transcend trends.
             </p>
@@ -55,8 +55,8 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <h3 className="font-light mb-2">Email</h3>
-                <a href="mailto:hello@urbanthread.co" className="text-sm hover:text-accent transition">
-                  hello@urbanthread.co
+                <a href="mailto:hello@medhueastore.com" className="text-sm hover:text-accent transition">
+                  hello@medhueastore.com
                 </a>
               </div>
               <div>
