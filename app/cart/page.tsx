@@ -79,7 +79,7 @@ export default function CartPage() {
                         <p className="text-sm text-muted-foreground">
                           Size: {item.size} | Color: {item.color}
                         </p>
-                        <p className="font-light">${product.price}</p>
+                        <p className="font-light">₹{product.price}</p>
                         <div className="flex items-center gap-4 pt-2">
                           <div className="flex items-center gap-3 border border-border w-fit">
                             <button
@@ -108,7 +108,7 @@ export default function CartPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-light">${(product.price * item.quantity).toFixed(2)}</p>
+                        <p className="font-light">₹{(product.price * item.quantity).toFixed(2)}</p>
                       </div>
                     </div>
                   )
@@ -122,15 +122,15 @@ export default function CartPage() {
                   <div className="space-y-4 text-sm">
                     <div className="flex justify-between">
                       <span>Subtotal</span>
-                      <span>${cartTotal.toFixed(2)}</span>
+                      <span>₹{cartTotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Shipping</span>
-                      <span>$0.00</span>
+                      <span>₹0.00</span>
                     </div>
                     <div className="flex justify-between border-t border-border pt-4">
                       <span className="font-light">Total</span>
-                      <span className="font-light">${cartTotal.toFixed(2)}</span>
+                      <span className="font-light">₹{cartTotal.toFixed(2)}</span>
                     </div>
                   </div>
 

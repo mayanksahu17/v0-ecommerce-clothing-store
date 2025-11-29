@@ -92,7 +92,7 @@ export default function CheckoutPage() {
                 </p>
                 <p>Email: {formData.email}</p>
                 <p>Items: {cart.items.length}</p>
-                <p>Total: ${cartTotal.toFixed(2)}</p>
+                <p>Total: ₹{cartTotal.toFixed(2)}</p>
                 <p>Payment: {selectedPaymentMethod.toUpperCase()}</p>
               </div>
             </div>
@@ -299,7 +299,7 @@ export default function CheckoutPage() {
                           <p className="font-light">{product.name}</p>
                           <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
                         </div>
-                        <p className="font-light text-right">${(product.price * item.quantity).toFixed(2)}</p>
+                        <p className="font-light text-right">₹{(product.price * item.quantity).toFixed(2)}</p>
                       </div>
                     )
                   })}
@@ -307,15 +307,15 @@ export default function CheckoutPage() {
                 <div className="space-y-3 border-t border-border pt-4">
                   <div className="flex justify-between text-sm">
                     <span>Subtotal</span>
-                    <span>${cartTotal.toFixed(2)}</span>
+                    <span>₹{cartTotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Shipping</span>
-                    <span>$0.00</span>
+                    <span>₹0.00</span>
                   </div>
                   <div className="flex justify-between font-light text-lg pt-3 border-t border-border">
                     <span>Total</span>
-                    <span>${cartTotal.toFixed(2)}</span>
+                    <span>₹{cartTotal.toFixed(2)}</span>
                   </div>
                 </div>
               </div>

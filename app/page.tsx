@@ -16,27 +16,42 @@ export default function Home() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h1 className="text-5xl sm:text-6xl font-light leading-tight">
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* Background Video */}
+        <video
+          src="/video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/premium-minimal-fashion-luxury-clothing-brand-look.jpg"
+          className="absolute inset-0 w-full h-full object-cover"
+          aria-label="Hero video showcasing our fashion collection"
+        >
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/30"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="max-w-2xl space-y-6 text-white">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight">
                 Minimal fashion for the modern lifestyle
               </h1>
-              <p className="text-base text-muted-foreground max-w-md">
+              <p className="text-base lg:text-lg text-white/90 max-w-md">
                 Discover curated pieces that blend timeless design with contemporary style. Premium quality, ethical
                 production.
               </p>
               <Link
                 href="/shop"
-                className="inline-flex items-center gap-2 px-8 py-3 bg-foreground text-background hover:bg-accent hover:text-background transition"
+                className="inline-flex items-center gap-2 px-8 py-3 bg-white text-black hover:bg-white/90 transition"
               >
                 Shop Now
                 <ArrowRight size={16} />
               </Link>
-            </div>
-            <div className="bg-secondary aspect-square overflow-hidden">
-              <img src="/premium-minimal-fashion-luxury-clothing-brand-look.jpg" alt="Hero" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ export function ProductCard({ id, name, price, image, rating, reviews }: Product
         <div className="space-y-2">
           <h3 className="text-sm font-light tracking-wide">{name}</h3>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-light">${price}</span>
+            <span className="text-sm font-light">₹{price}</span>
             <div className="flex items-center gap-1">
               <Star size={12} fill="currentColor" />
               <span className="text-xs text-muted-foreground">

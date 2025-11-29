@@ -84,7 +84,7 @@ export default function ProductPage() {
               <div>
                 <h1 className="text-4xl font-light mb-4">{product.name}</h1>
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="text-2xl font-light">${product.price}</span>
+                  <span className="text-2xl font-light">₹{product.price}</span>
                   <div className="flex items-center gap-1">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
@@ -180,7 +180,7 @@ export default function ProductPage() {
               </div>
 
               <div className="text-xs text-muted-foreground space-y-2">
-                <p>✓ Free shipping on orders over $100</p>
+                <p>✓ Free shipping on orders over ₹100</p>
                 <p>✓ 30-day returns</p>
                 <p>✓ Sustainably sourced materials</p>
               </div>

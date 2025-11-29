@@ -149,10 +149,10 @@ export const categories = [
 ]
 
 export const priceRanges = [
-  { id: "0-100", label: "$0 - $100", min: 0, max: 100 },
-  { id: "100-200", label: "$100 - $200", min: 100, max: 200 },
-  { id: "200-300", label: "$200 - $300", min: 200, max: 300 },
-  { id: "300+", label: "$300+", min: 300, max: Number.POSITIVE_INFINITY },
+  { id: "0-100", label: "₹0 - ₹100", min: 0, max: 100 },
+  { id: "100-200", label: "₹100 - ₹200", min: 100, max: 200 },
+  { id: "200-300", label: "₹200 - ₹300", min: 200, max: 300 },
+  { id: "300+", label: "₹300+", min: 300, max: Number.POSITIVE_INFINITY },
 ]
 
 export const colors = [
