@@ -21,12 +21,12 @@ export default function ReturnExchangePage() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Return Policy</h2>
-              <p>You have 30 days from the date of purchase to return any item for a full refund.</p>
+              <p>Items can be returned within 14 days of delivery.</p>
               <h3 className="text-lg font-light text-foreground mt-4">Return Conditions:</h3>
               <ul className="list-disc list-inside space-y-2">
-                <li>Items must be returned within 30 days of purchase</li>
-                <li>Items must be unused and in original condition</li>
-                <li>Original tags and packaging must be included</li>
+                <li>Items must be unused, unworn, and in original packaging with tags intact</li>
+                <li>Items can be returned within 3-7 days as per our Return & Refund Policy</li>
+                <li>All approved refunds are processed via bank transfer</li>
                 <li>Return shipping is at customer's expense</li>
                 <li>Items must not show signs of wear or damage</li>
               </ul>
@@ -35,16 +35,20 @@ export default function ReturnExchangePage() {
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Exchange Policy</h2>
               <p>
-                If you'd like to exchange an item for a different size or color, we're happy to help. Exchanges are
-                subject to availability.
+                Exchanges are subject to product availability. If you'd like to exchange an item for a different size or color, we're happy to help.
               </p>
               <h3 className="text-lg font-light text-foreground mt-4">Exchange Process:</h3>
               <ol className="list-decimal list-inside space-y-2">
-                <li>Contact us at hello@medhueastore.com to initiate an exchange</li>
+                <li>
+                  Contact us at{" "}
+                  <a href="mailto:hello@medhueastore.com" className="underline hover:text-accent">
+                    hello@medhueastore.com
+                  </a>{" "}
+                  to initiate an exchange
+                </li>
                 <li>We'll provide you with return instructions and a return authorization number</li>
                 <li>Ship the item back to us in its original condition</li>
-                <li>Once we receive and inspect the item, we'll process your exchange</li>
-                <li>Your new item will be shipped to you at no additional shipping cost</li>
+                <li>Once we receive and inspect the item, if exchange is accepted by us, exchanged product will be delivered within 7-10 business days</li>
               </ol>
             </section>
 

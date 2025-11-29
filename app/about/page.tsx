@@ -55,20 +55,28 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <h3 className="font-light mb-2">Email</h3>
-                <a href="mailto:hello@medhueastore.com" className="text-sm hover:text-accent transition">
-                  hello@medhueastore.com
+                <a href="mailto:Prabhash7049@gmail.com" className="text-sm hover:text-accent transition">
+                  Prabhash7049@gmail.com
                 </a>
               </div>
               <div>
                 <h3 className="font-light mb-2">Phone</h3>
-                <a href="tel:+1234567890" className="text-sm hover:text-accent transition">
-                  +1 (234) 567-890
+                <a href="tel:+917049407951" className="text-sm hover:text-accent transition">
+                  +91 7049407951
                 </a>
               </div>
               <div>
                 <h3 className="font-light mb-2">Address</h3>
-                <p className="text-sm text-muted-foreground">123 Fashion St, Design City, DC 12345</p>
+                <p className="text-sm text-muted-foreground">
+                  353 MR3 Road, Mahalakshmi Nagar<br />
+                  Indore - 452010
+                </p>
               </div>
+            </div>
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm text-muted-foreground">
+                Medhuea Store is owned by <strong className="text-foreground">NineXFold agency llp</strong>
+              </p>
             </div>
           </div>
         </div>

@@ -12,51 +12,72 @@ export default function TermsPage() {
             <p>Last updated: November 2025</p>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-light text-foreground">Agreement to Terms</h2>
+              <h2 className="text-2xl font-light text-foreground">Terms & Conditions – Medhuea Store</h2>
               <p>
-                By accessing and using this website, you accept and agree to be bound by the terms and provision of this
-                agreement.
+                Welcome to Medhuea Store! By using our website, you agree to the following terms and conditions:
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-light text-foreground">Use License</h2>
-              <p>
-                Permission is granted to temporarily download one copy of the materials (information or software) on
-                Medhuea Store's website for personal, non-commercial transitory viewing only. This is the grant of a
-                license, not a transfer of title, and under this license you may not:
-              </p>
+              <h2 className="text-2xl font-light text-foreground">1. General</h2>
               <ul className="list-disc list-inside space-y-2">
-                <li>Modify or copy the materials</li>
-                <li>Use the materials for any commercial purpose or for any public display</li>
-                <li>Attempt to reverse engineer any software contained on the website</li>
-                <li>Remove any copyright or proprietary notations</li>
-                <li>Transfer the materials to another person or "mirror" the materials</li>
+                <li>Medhuea Store reserves the right to modify these terms at any time.</li>
+                <li>Continued use of our website indicates acceptance of updated terms.</li>
               </ul>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-light text-foreground">Disclaimer</h2>
+              <h2 className="text-2xl font-light text-foreground">2. Products</h2>
+              <ul className="list-disc list-inside space-y-2">
+                <li>We make every effort to display product colors accurately, but we cannot guarantee exact color representation.</li>
+                <li>Prices and availability are subject to change without notice.</li>
+              </ul>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="text-2xl font-light text-foreground">3. Orders</h2>
+              <ul className="list-disc list-inside space-y-2">
+                <li>Orders are subject to acceptance and availability.</li>
+                <li>We reserve the right to refuse or cancel orders at our discretion.</li>
+              </ul>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="text-2xl font-light text-foreground">4. Intellectual Property</h2>
               <p>
-                The materials on Medhuea Store's website are provided on an 'as is' basis. Medhuea Store makes no
-                warranties, expressed or implied, and hereby disclaims and negates all other warranties including,
-                without limitation, implied warranties or conditions of merchantability, fitness for a particular
-                purpose, or non-infringement of intellectual property or other violation of rights.
+                All content on this website, including images, text, and designs, is owned by <strong className="text-foreground">NineXFold agency llp</strong> and protected by copyright.
               </p>
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-2xl font-light text-foreground">Limitations</h2>
+              <h2 className="text-2xl font-light text-foreground">5. Liability</h2>
               <p>
-                In no event shall Medhuea Store or its suppliers be liable for any damages (including, without
-                limitation, damages for loss of data or profit, or due to business interruption) arising out of the use
-                or inability to use the materials on Medhuea Store's website.
+                Medhuea Store is not liable for any indirect or consequential damages arising from the use of our products or website.
+              </p>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="text-2xl font-light text-foreground">6. Governing Law</h2>
+              <p>
+                These terms are governed by the laws of Madhya Pradesh.
+              </p>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="text-2xl font-light text-foreground">Cancellation Policy</h2>
+              <p>
+                Our Cancellation Policy allows order cancellations within 24 hours of purchase.
               </p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Contact Us</h2>
-              <p>If you have any questions about these Terms & Conditions, please contact us at hello@medhueastore.com</p>
+              <p>
+                This website is operated by Medhuea Store, owned by <strong className="text-foreground">NineXFold agency llp</strong>. If you have any questions about these Terms & Conditions, please contact us at{" "}
+                <a href="mailto:Prabhash7049@gmail.com" className="underline hover:text-accent">
+                  Prabhash7049@gmail.com
+                </a>
+              </p>
             </section>
           </div>
         </div>

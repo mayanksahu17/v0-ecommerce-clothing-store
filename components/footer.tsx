@@ -101,6 +101,7 @@ export function Footer() {
                 <span className="text-lg font-light tracking-widest">STORE</span>
               </div>
               <p className="text-xs text-muted-foreground">© 2025 Medhuea Store. All rights reserved.</p>
+              <p className="text-xs text-muted-foreground mt-1">Owned by <strong className="text-foreground">NineXFold agency llp</strong></p>
             </div>
             <div className="flex gap-4">
               <Link href="#" className="hover:text-accent transition">

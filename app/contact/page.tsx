@@ -106,25 +106,36 @@ export default function ContactPage() {
             )}
           </form>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 pt-16 border-t border-border">
-            <div className="text-center">
-              <h3 className="text-lg font-light mb-2">Email</h3>
-              <a
-                href="mailto:hello@medhueastore.com"
-                className="text-sm text-muted-foreground hover:text-accent transition"
-              >
-                hello@medhueastore.com
-              </a>
+          <div className="mt-16 space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-border">
+              <div className="text-center">
+                <h3 className="text-lg font-light mb-2">Email</h3>
+                <a
+                  href="mailto:Prabhash7049@gmail.com"
+                  className="text-sm text-muted-foreground hover:text-accent transition"
+                >
+                  Prabhash7049@gmail.com
+                </a>
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-light mb-2">Phone</h3>
+                <a href="tel:+917049407951" className="text-sm text-muted-foreground hover:text-accent transition">
+                  +91 7049407951
+                </a>
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-light mb-2">Address</h3>
+                <p className="text-sm text-muted-foreground">
+                  353 MR3 Road, Mahalakshmi Nagar<br />
+                  Indore - 452010
+                </p>
+              </div>
             </div>
-            <div className="text-center">
-              <h3 className="text-lg font-light mb-2">Phone</h3>
-              <a href="tel:+1234567890" className="text-sm text-muted-foreground hover:text-accent transition">
-                +1 (234) 567-890
-              </a>
-            </div>
-            <div className="text-center">
-              <h3 className="text-lg font-light mb-2">Hours</h3>
-              <p className="text-sm text-muted-foreground">Mon - Fri: 9AM - 6PM EST</p>
+
+            <div className="pt-8 border-t border-border text-center">
+              <p className="text-sm text-muted-foreground">
+                Medhuea Store is owned by <strong className="text-foreground">NineXFold agency llp</strong>
+              </p>
             </div>
           </div>
         </div>
