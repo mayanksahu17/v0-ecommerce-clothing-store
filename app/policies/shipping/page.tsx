@@ -15,16 +15,16 @@ export default function ShippingPolicyPage() {
               <h2 className="text-2xl font-light text-foreground">Shipping Options</h2>
               <p>We offer several shipping options to meet your needs:</p>
               <ul className="list-disc list-inside space-y-2">
-                <li>Standard Shipping (5-7 business days) - FREE on orders over ₹100</li>
-                <li>Express Shipping (2-3 business days) - ₹15</li>
-                <li>Overnight Shipping (1 business day) - ₹25</li>
+                <li>Standard Shipping (5-7 business days) - FREE on orders over ₹2500</li>
+                <li>Express Shipping (2-3 business days) - ₹150</li>
+                <li>Overnight Shipping (1 business day) - ₹250</li>
               </ul>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-light text-foreground">Shipping Rates</h2>
               <p>
-                Standard shipping is complimentary for orders over ₹100. Orders under ₹100 will incur a ₹10 shipping fee
+                Standard shipping is complimentary for orders over ₹2500. Orders under ₹2500 will incur a ₹100 shipping fee
                 unless otherwise specified.
               </p>
             </section>

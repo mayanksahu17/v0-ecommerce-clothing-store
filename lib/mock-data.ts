@@ -4,7 +4,7 @@ export const products: Product[] = [
   {
     id: "1",
     name: "Essential Linen Shirt",
-    price: 129,
+    price: 2699,
     category: "tops",
     colors: ["white", "cream", "black", "sage"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -21,7 +21,7 @@ export const products: Product[] = [
   {
     id: "2",
     name: "Tailored Trousers",
-    price: 159,
+    price: 3299,
     category: "bottoms",
     colors: ["black", "grey", "navy", "taupe"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -38,7 +38,7 @@ export const products: Product[] = [
   {
     id: "3",
     name: "Oversized Blazer",
-    price: 249,
+    price: 4599,
     category: "outerwear",
     colors: ["black", "cream", "chocolate", "charcoal"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -55,7 +55,7 @@ export const products: Product[] = [
   {
     id: "4",
     name: "Minimal White T-Shirt",
-    price: 69,
+    price: 2799,
     category: "tops",
     colors: ["white", "black", "grey", "beige"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -72,7 +72,7 @@ export const products: Product[] = [
   {
     id: "5",
     name: "Wide-Leg Denim",
-    price: 189,
+    price: 3499,
     category: "bottoms",
     colors: ["indigo", "black", "light-blue", "white"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -89,7 +89,7 @@ export const products: Product[] = [
   {
     id: "6",
     name: "Silk Slip Dress",
-    price: 199,
+    price: 3999,
     category: "dresses",
     colors: ["champagne", "black", "ivory", "sage"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -106,7 +106,7 @@ export const products: Product[] = [
   {
     id: "7",
     name: "Wool Knit Sweater",
-    price: 139,
+    price: 3199,
     category: "tops",
     colors: ["cream", "grey", "black", "navy"],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -123,7 +123,7 @@ export const products: Product[] = [
   {
     id: "8",
     name: "Leather Loafers",
-    price: 219,
+    price: 5499,
     category: "shoes",
     colors: ["black", "brown", "camel", "white"],
     sizes: ["5", "6", "7", "8", "9", "10", "11", "12"],
@@ -149,10 +149,10 @@ export const categories = [
 ]
 
 export const priceRanges = [
-  { id: "0-100", label: "₹0 - ₹100", min: 0, max: 100 },
-  { id: "100-200", label: "₹100 - ₹200", min: 100, max: 200 },
-  { id: "200-300", label: "₹200 - ₹300", min: 200, max: 300 },
-  { id: "300+", label: "₹300+", min: 300, max: Number.POSITIVE_INFINITY },
+  { id: "2500-3000", label: "₹2500 - ₹3000", min: 2500, max: 3000 },
+  { id: "3000-4000", label: "₹3000 - ₹4000", min: 3000, max: 4000 },
+  { id: "4000-5000", label: "₹4000 - ₹5000", min: 4000, max: 5000 },
+  { id: "5000+", label: "₹5000+", min: 5000, max: Number.POSITIVE_INFINITY },
 ]
 
 export const colors = [

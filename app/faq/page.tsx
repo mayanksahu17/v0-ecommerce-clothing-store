@@ -28,7 +28,7 @@ export default function FAQPage() {
                 <div>
                   <h3 className="text-lg font-light mb-2">Is free shipping available?</h3>
                   <p className="text-sm text-muted-foreground">
-                    Standard shipping is complimentary for orders over ₹100. Orders under ₹100 will incur a ₹10 shipping
+                    Standard shipping is complimentary for orders over ₹2500. Orders under ₹2500 will incur a ₹100 shipping
                     fee.
                   </p>
                 </div>

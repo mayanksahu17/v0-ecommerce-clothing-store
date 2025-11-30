@@ -180,7 +180,7 @@ export default function ProductPage() {
               </div>
 
               <div className="text-xs text-muted-foreground space-y-2">
-                <p>✓ Free shipping on orders over ₹100</p>
+                <p>✓ Free shipping on orders over ₹2500</p>
                 <p>✓ 30-day returns</p>
                 <p>✓ Sustainably sourced materials</p>
               </div>
