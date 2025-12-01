@@ -3,11 +3,14 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
-import { products, categories, priceRanges, colors } from "@/lib/mock-data"
-import { useState, useMemo } from "react"
+import { products as mockProducts, categories, priceRanges, colors } from "@/lib/mock-data"
+import { useState, useMemo, useEffect } from "react"
 import { ChevronDown } from "lucide-react"
+import type { Product } from "@/lib/types"
 
 export default function ShopPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [selectedPriceRange, setSelectedPriceRange] = useState<string[]>([])
@@ -17,6 +20,29 @@ export default function ShopPage() {
     price: true,
     color: false,
   })
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products')
+      if (response.ok) {
+        const data = await response.json()
+        setProducts(data)
+      } else {
+        // Fallback to mock data if API fails
+        setProducts(mockProducts)
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      // Fallback to mock data
+      setProducts(mockProducts)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const filteredProducts = useMemo(() => {
     let filtered = products
@@ -49,7 +75,7 @@ export default function ShopPage() {
     }
 
     return filtered
-  }, [selectedCategory, selectedColors, selectedPriceRange, sortBy])
+  }, [products, selectedCategory, selectedColors, selectedPriceRange, sortBy])
 
   return (
     <main className="bg-background">
@@ -177,16 +203,24 @@ export default function ShopPage() {
 
             {/* Products */}
             <div className="lg:col-span-3">
-              <div className="mb-6 text-sm text-muted-foreground">Showing {filteredProducts.length} products</div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.length > 0 ? (
-                  filteredProducts.map((product) => <ProductCard key={product.id} {...product} />)
-                ) : (
-                  <div className="col-span-full text-center py-12">
-                    <p className="text-muted-foreground">No products found. Try adjusting your filters.</p>
+              {loading ? (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">Loading products...</p>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-6 text-sm text-muted-foreground">Showing {filteredProducts.length} products</div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {filteredProducts.length > 0 ? (
+                      filteredProducts.map((product) => <ProductCard key={product.id} {...product} />)
+                    ) : (
+                      <div className="col-span-full text-center py-12">
+                        <p className="text-muted-foreground">No products found. Try adjusting your filters.</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
           </div>
         </div>

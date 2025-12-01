@@ -3,11 +3,37 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
-import { products, categories } from "@/lib/mock-data"
+import { products as mockProducts, categories } from "@/lib/mock-data"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import type { Product } from "@/lib/types"
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('/api/products')
+      if (response.ok) {
+        const data = await response.json()
+        setProducts(data)
+      } else {
+        setProducts(mockProducts)
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      setProducts(mockProducts)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const featuredProducts = products.slice(0, 4)
   const newArrivals = products.slice(4, 8)
 

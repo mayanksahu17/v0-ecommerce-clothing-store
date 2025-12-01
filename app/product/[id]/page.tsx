@@ -3,23 +3,96 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
-import { products } from "@/lib/mock-data"
+import { products as mockProducts } from "@/lib/mock-data"
 import { useCart } from "@/hooks/use-cart"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Star, Heart, Share2 } from "lucide-react"
 import { useParams } from "next/navigation"
+import type { Product } from "@/lib/types"
 
 export default function ProductPage() {
   const params = useParams()
   const productId = params.id as string
   const { addToCart } = useCart()
-
-  const product = products.find((p) => p.id === productId)
+  const [product, setProduct] = useState<Product | null>(null)
+  const [allProducts, setAllProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedImage, setSelectedImage] = useState(0)
   const [selectedSize, setSelectedSize] = useState("")
-  const [selectedColor, setSelectedColor] = useState(product?.colors[0] || "")
+  const [selectedColor, setSelectedColor] = useState("")
   const [quantity, setQuantity] = useState(1)
   const [isAdded, setIsAdded] = useState(false)
+
+  useEffect(() => {
+    fetchProduct()
+    fetchAllProducts()
+  }, [productId])
+
+  const fetchProduct = async () => {
+    if (!productId) {
+      setLoading(false)
+      return
+    }
+    
+    try {
+      const response = await fetch(`/api/products/${productId}`)
+      const data = await response.json()
+      
+      if (response.ok && data && !data.error) {
+        setProduct(data)
+        setSelectedColor(data.colors?.[0] || "")
+      } else {
+        // Fallback to mock data
+        console.log('API returned error, trying mock data for id:', productId)
+        const mockProduct = mockProducts.find((p) => p.id === productId)
+        if (mockProduct) {
+          setProduct(mockProduct)
+          setSelectedColor(mockProduct.colors[0] || "")
+        } else {
+          console.error('Product not found in API or mock data:', productId)
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error)
+      // Fallback to mock data
+      const mockProduct = mockProducts.find((p) => p.id === productId)
+      if (mockProduct) {
+        setProduct(mockProduct)
+        setSelectedColor(mockProduct.colors[0] || "")
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await fetch('/api/products')
+      if (response.ok) {
+        const data = await response.json()
+        setAllProducts(data)
+      } else {
+        setAllProducts(mockProducts)
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      setAllProducts(mockProducts)
+    }
+  }
+
+  if (loading) {
+    return (
+      <main className="bg-background">
+        <Header />
+        <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-muted-foreground">Loading product...</p>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    )
+  }
 
   if (!product) {
     return (
@@ -45,7 +118,7 @@ export default function ProductPage() {
     setTimeout(() => setIsAdded(false), 2000)
   }
 
-  const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id)
+  const relatedProducts = allProducts.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
 
   return (
     <main className="bg-background">
@@ -59,24 +132,26 @@ export default function ProductPage() {
             <div className="space-y-4">
               <div className="bg-secondary aspect-square overflow-hidden">
                 <img
-                  src={product.images[selectedImage] || "/placeholder.svg"}
+                  src={product.images && product.images.length > 0 ? (product.images[selectedImage] || product.image) : (product.image || "/placeholder.svg")}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="grid grid-cols-4 gap-4">
-                {product.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`bg-secondary aspect-square overflow-hidden border ${
-                      selectedImage === idx ? "border-foreground" : "border-border"
-                    }`}
-                  >
-                    <img src={img || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
+              {product.images && product.images.length > 0 && (
+                <div className="grid grid-cols-4 gap-4">
+                  {product.images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImage(idx)}
+                      className={`bg-secondary aspect-square overflow-hidden border ${
+                        selectedImage === idx ? "border-foreground" : "border-border"
+                      }`}
+                    >
+                      <img src={img || product.image || "/placeholder.svg"} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Details */}
