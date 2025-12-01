@@ -1,7 +1,7 @@
 # Admin Portal Guide
 
 ## Overview
-The admin portal allows you to manage products in your ecommerce store. You can view all products, add new ones, upload images to AWS S3, and delete products.
+The admin portal allows you to manage products in your ecommerce store. You can view all products, add new ones, upload images to AWS S3, edit existing listings, manage multi-image galleries, and delete products.
 
 ## Accessing the Admin Portal
 Navigate to `/admin` in your browser (e.g., `http://localhost:3000/admin`)
@@ -31,12 +31,21 @@ Navigate to `/admin` in your browser (e.g., `http://localhost:3000/admin`)
    - You can add multiple images by uploading more files or adding URLs manually
 4. Click "Create Product" to save
 
-### 3. Delete Product
+### 3. Edit Product & Manage Images
+1. Click the pencil icon alongside any product in the table
+2. Update pricing, copy, categories, colors, sizes, and ratings as needed
+3. Manage the product gallery:
+   - Upload additional files or paste hosted URLs
+   - Set the primary hero image (used first in the carousel)
+   - Remove outdated images instantly
+4. Click **Update Product** to save changes
+
+### 4. Delete Product
 - Click the trash icon next to any product
 - Confirm the deletion
 - The product will be permanently removed from the database
 
-### 4. Image Upload
+### 5. Image Upload
 - Images are uploaded to AWS S3 bucket: `lodgezify`
 - Images are stored in the `products/` folder
 - Each image gets a unique filename with timestamp
@@ -76,6 +85,9 @@ Body: JSON with product details
 
 ### GET /api/products/[id]
 Returns a single product by ID
+
+### PATCH /api/products/[id]
+Updates an existing product, including gallery assets
 
 ### DELETE /api/products/[id]
 Deletes a product by ID

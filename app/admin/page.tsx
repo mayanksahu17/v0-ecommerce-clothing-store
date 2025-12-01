@@ -3,31 +3,146 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useState, useEffect } from "react"
-import { Trash2, Plus, Upload, X } from "lucide-react"
+import { Trash2, Plus, Upload, X, Edit3, Star } from "lucide-react"
 import type { Product } from "@/lib/types"
+
+type ProductFormState = {
+  name: string
+  price: string
+  category: string
+  description: string
+  colorsInput: string
+  sizesInput: string
+  image: string
+  images: string[]
+  rating: string
+  reviews: string
+}
+
+const getEmptyFormState = (): ProductFormState => ({
+  name: "",
+  price: "",
+  category: "tops",
+  description: "",
+  colorsInput: "",
+  sizesInput: "",
+  image: "",
+  images: [],
+  rating: "4.5",
+  reviews: "0",
+})
 
 export default function AdminPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [formData, setFormData] = useState({
-    name: "",
-    price: "",
-    category: "tops",
-    description: "",
-    colors: "",
-    sizes: "",
-    image: "",
-    images: "",
-    rating: "4.5",
-    reviews: "0",
-  })
+  const [isFormVisible, setIsFormVisible] = useState(false)
+  const [formMode, setFormMode] = useState<"create" | "edit">("create")
+  const [editingProductId, setEditingProductId] = useState<string | null>(null)
+  const [formData, setFormData] = useState<ProductFormState>(getEmptyFormState())
   const [uploading, setUploading] = useState(false)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [newImageUrl, setNewImageUrl] = useState("")
+
+  const isEditing = formMode === "edit" && Boolean(editingProductId)
 
   useEffect(() => {
     fetchProducts()
   }, [])
+
+  const handleOpenCreateForm = () => {
+    setFormMode("create")
+    setEditingProductId(null)
+    setFormData(getEmptyFormState())
+    setNewImageUrl("")
+    setSelectedFile(null)
+    setIsFormVisible(true)
+  }
+
+  const handleCloseForm = () => {
+    setIsFormVisible(false)
+    setFormMode("create")
+    setEditingProductId(null)
+    setFormData(getEmptyFormState())
+    setNewImageUrl("")
+    setSelectedFile(null)
+  }
+
+  const handleEditProduct = (product: Product) => {
+    setFormMode("edit")
+    setEditingProductId(product.id)
+    setFormData({
+      name: product.name,
+      price: product.price.toString(),
+      category: product.category,
+      description: product.description,
+      colorsInput: product.colors.join(", "),
+      sizesInput: product.sizes.join(", "),
+      image: product.image || product.images?.[0] || "",
+      images: product.images?.length ? product.images : product.image ? [product.image] : [],
+      rating: product.rating.toString(),
+      reviews: product.reviews.toString(),
+    })
+    setNewImageUrl("")
+    setSelectedFile(null)
+    setIsFormVisible(true)
+  }
+
+  const addImageToGallery = (url: string) => {
+    const cleanedUrl = url.trim()
+    if (!cleanedUrl) return
+
+    setFormData((prev) => {
+      const alreadyExists = prev.images.includes(cleanedUrl)
+      const updatedList = alreadyExists ? prev.images : [...prev.images, cleanedUrl]
+      const primaryImage = prev.image || cleanedUrl
+      const ordered =
+        primaryImage !== ""
+          ? [primaryImage, ...updatedList.filter((img) => img !== primaryImage)]
+          : updatedList
+
+      return {
+        ...prev,
+        image: primaryImage,
+        images: ordered,
+      }
+    })
+  }
+
+  const handleAddImageByUrl = () => {
+    if (!newImageUrl.trim()) return
+    addImageToGallery(newImageUrl)
+    setNewImageUrl("")
+  }
+
+  const handleRemoveImage = (url: string) => {
+    setFormData((prev) => {
+      const filtered = prev.images.filter((img) => img !== url)
+      const newPrimary = prev.image === url ? filtered[0] || "" : prev.image
+      const ordered = newPrimary
+        ? [newPrimary, ...filtered.filter((img) => img !== newPrimary)]
+        : filtered
+
+      return {
+        ...prev,
+        image: newPrimary,
+        images: ordered,
+      }
+    })
+  }
+
+  const handleSetPrimaryImage = (url: string) => {
+    setFormData((prev) => {
+      if (!prev.images.includes(url)) {
+        return prev
+      }
+      const remaining = prev.images.filter((img) => img !== url)
+      return {
+        ...prev,
+        image: url,
+        images: [url, ...remaining],
+      }
+    })
+  }
 
   const fetchProducts = async () => {
     try {
@@ -50,6 +165,9 @@ export default function AdminPage() {
       })
       if (response.ok) {
         setProducts(products.filter(p => p.id !== id))
+        if (editingProductId === id) {
+          handleCloseForm()
+        }
         alert('Product deleted successfully')
       } else {
         alert('Failed to delete product')
@@ -81,11 +199,7 @@ export default function AdminPage() {
 
       const data = await response.json()
       if (data.url) {
-        setFormData(prev => ({
-          ...prev,
-          image: data.url,
-          images: prev.images ? `${prev.images},${data.url}` : data.url,
-        }))
+        addImageToGallery(data.url)
         setSelectedFile(null)
         alert('Image uploaded successfully')
       } else {
@@ -101,48 +215,71 @@ export default function AdminPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    const priceValue = Number(formData.price)
+    if (!Number.isFinite(priceValue)) {
+      alert('Please enter a valid price')
+      return
+    }
+
+    if (priceValue < 2599) {
+      alert('Price must be at least ₹2599')
+      return
+    }
+
+    const colorsArray = formData.colorsInput
+      .split(',')
+      .map((c) => c.trim())
+      .filter((c) => c)
+    const sizesArray = formData.sizesInput
+      .split(',')
+      .map((s) => s.trim())
+      .filter((s) => s)
+    const gallery = formData.images.length
+      ? formData.images
+      : formData.image
+      ? [formData.image]
+      : []
+
+    if (gallery.length === 0) {
+      alert('Please upload at least one product image')
+      return
+    }
+
+    const payload = {
+      name: formData.name,
+      price: priceValue,
+      category: formData.category,
+      description: formData.description,
+      colors: colorsArray,
+      sizes: sizesArray,
+      image: gallery[0],
+      images: gallery,
+      rating: Number(formData.rating) || 0,
+      reviews: Number(formData.reviews) || 0,
+    }
+
     try {
-      const response = await fetch('/api/products', {
-        method: 'POST',
+      const endpoint = isEditing && editingProductId ? `/api/products/${editingProductId}` : '/api/products'
+      const method = isEditing ? 'PATCH' : 'POST'
+      const response = await fetch(endpoint, {
+        method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          name: formData.name,
-          price: Number(formData.price),
-          category: formData.category,
-          description: formData.description,
-          colors: formData.colors.split(',').map(c => c.trim()).filter(c => c),
-          sizes: formData.sizes.split(',').map(s => s.trim()).filter(s => s),
-          image: formData.image,
-          images: formData.images.split(',').map(i => i.trim()).filter(i => i),
-          rating: Number(formData.rating),
-          reviews: Number(formData.reviews),
-        }),
+        body: JSON.stringify(payload),
       })
 
       if (response.ok) {
-        alert('Product created successfully')
-        setShowAddForm(false)
-        setFormData({
-          name: "",
-          price: "",
-          category: "tops",
-          description: "",
-          colors: "",
-          sizes: "",
-          image: "",
-          images: "",
-          rating: "4.5",
-          reviews: "0",
-        })
+        alert(isEditing ? 'Product updated successfully' : 'Product created successfully')
+        handleCloseForm()
         fetchProducts()
       } else {
-        alert('Failed to create product')
+        alert('Failed to save product')
       }
     } catch (error) {
-      console.error('Error creating product:', error)
-      alert('Failed to create product')
+      console.error('Error saving product:', error)
+      alert('Failed to save product')
     }
   }
 
@@ -166,7 +303,7 @@ export default function AdminPage() {
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-4xl font-light">Admin Portal</h1>
             <button
-              onClick={() => setShowAddForm(!showAddForm)}
+              onClick={handleOpenCreateForm}
               className="flex items-center gap-2 px-6 py-3 bg-foreground text-background hover:bg-accent transition"
             >
               <Plus size={20} />
@@ -174,12 +311,21 @@ export default function AdminPage() {
             </button>
           </div>
 
-          {showAddForm && (
+          {isFormVisible && (
             <div className="bg-secondary p-8 mb-8 border border-border">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-light">Add New Product</h2>
+                <div>
+                  <h2 className="text-2xl font-light">
+                    {isEditing ? 'Edit Product' : 'Add New Product'}
+                  </h2>
+                  {isEditing && (
+                    <p className="text-sm text-muted-foreground">
+                      Updating <span className="font-medium">{formData.name}</span>
+                    </p>
+                  )}
+                </div>
                 <button
-                  onClick={() => setShowAddForm(false)}
+                  onClick={handleCloseForm}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <X size={24} />
@@ -238,8 +384,8 @@ export default function AdminPage() {
                     <input
                       type="text"
                       required
-                      value={formData.colors}
-                      onChange={(e) => setFormData({ ...formData, colors: e.target.value })}
+                      value={formData.colorsInput}
+                      onChange={(e) => setFormData({ ...formData, colorsInput: e.target.value })}
                       placeholder="black, white, navy"
                       className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
                     />
@@ -249,8 +395,8 @@ export default function AdminPage() {
                     <input
                       type="text"
                       required
-                      value={formData.sizes}
-                      onChange={(e) => setFormData({ ...formData, sizes: e.target.value })}
+                      value={formData.sizesInput}
+                      onChange={(e) => setFormData({ ...formData, sizesInput: e.target.value })}
                       placeholder="XS, S, M, L, XL"
                       className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
                     />
@@ -300,27 +446,74 @@ export default function AdminPage() {
                   </div>
                   {formData.image && (
                     <div className="mt-4">
-                      <p className="text-sm text-muted-foreground mb-2">Main Image URL:</p>
-                      <input
-                        type="text"
-                        value={formData.image}
-                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                        className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
-                      />
-                      {formData.image && (
-                        <img src={formData.image} alt="Preview" className="mt-2 w-32 h-32 object-cover" />
-                      )}
+                      <p className="text-sm text-muted-foreground mb-2">Primary image preview</p>
+                      <img src={formData.image} alt="Primary preview" className="w-32 h-32 object-cover border border-border" />
                     </div>
                   )}
+                  <div className="mt-6">
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-light">Image Gallery</label>
+                      {formData.images.length > 0 && (
+                        <span className="text-xs text-muted-foreground">Tip: set a hero image for the product carousel</span>
+                      )}
+                    </div>
+                    {formData.images.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">No images added yet. Upload or paste a URL to get started.</p>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {formData.images.map((img) => (
+                          <div key={img} className="border border-border bg-background p-3">
+                            <div className="relative">
+                              <img src={img} alt="Product preview" className="w-full h-40 object-cover" />
+                              {formData.image === img && (
+                                <span className="absolute top-2 left-2 bg-foreground/80 text-background text-xs px-2 py-0.5 flex items-center gap-1">
+                                  <Star size={12} />
+                                  Primary
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex gap-2 mt-3">
+                              <button
+                                type="button"
+                                onClick={() => handleSetPrimaryImage(img)}
+                                disabled={formData.image === img}
+                                className="flex-1 text-xs border border-border px-2 py-1 disabled:opacity-50"
+                              >
+                                Set primary
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveImage(img)}
+                                className="flex-1 text-xs text-red-500 border border-red-200 px-2 py-1 hover:text-red-600"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <div className="mt-4">
-                    <label className="block text-sm font-light mb-2">Additional Images (comma-separated URLs)</label>
-                    <textarea
-                      value={formData.images}
-                      onChange={(e) => setFormData({ ...formData, images: e.target.value })}
-                      rows={2}
-                      placeholder="https://..., https://..."
-                      className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground resize-none"
-                    />
+                    <label className="block text-sm font-light mb-2">Add Image by URL</label>
+                    <div className="flex flex-col md:flex-row gap-4">
+                      <input
+                        type="url"
+                        value={newImageUrl}
+                        onChange={(e) => setNewImageUrl(e.target.value)}
+                        placeholder="https://example.com/image.jpg"
+                        className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddImageByUrl}
+                        disabled={!newImageUrl.trim()}
+                        className="px-6 py-3 border border-border text-sm uppercase tracking-wide disabled:opacity-50 flex items-center gap-2 justify-center"
+                      >
+                        <Plus size={16} />
+                        Add Image
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -328,7 +521,7 @@ export default function AdminPage() {
                   type="submit"
                   className="w-full py-4 bg-foreground text-background hover:bg-accent transition font-light tracking-wide"
                 >
-                  Create Product
+                  {isEditing ? 'Update Product' : 'Create Product'}
                 </button>
               </form>
             </div>
@@ -363,12 +556,20 @@ export default function AdminPage() {
                       <td className="py-4 text-sm font-light">₹{product.price}</td>
                       <td className="py-4 text-sm text-muted-foreground">{product.rating} ({product.reviews})</td>
                       <td className="py-4">
-                        <button
-                          onClick={() => handleDelete(product.id)}
-                          className="text-red-500 hover:text-red-700 transition"
-                        >
-                          <Trash2 size={20} />
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => handleEditProduct(product)}
+                            className="text-muted-foreground hover:text-foreground transition"
+                          >
+                            <Edit3 size={18} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(product.id)}
+                            className="text-red-500 hover:text-red-700 transition"
+                          >
+                            <Trash2 size={20} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
