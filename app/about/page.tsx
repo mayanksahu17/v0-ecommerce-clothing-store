@@ -2,14 +2,14 @@
 
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { Check, X, Loader2 } from "lucide-react"
 import Link from "next/link"
 import { parsePaymentResponse } from "sabpaisa-pg-dev"
 import { useCart } from "@/hooks/use-cart"
 import { useSearchParams } from "next/navigation"
 
-export default function AboutPage() {
+function AboutPageContent() {
   const { clearCart } = useCart()
   const searchParams = useSearchParams()
   const [paymentData, setPaymentData] = useState<any>(null)
@@ -251,5 +251,24 @@ export default function AboutPage() {
 
       <Footer />
     </main>
+  )
+}
+
+export default function AboutPage() {
+  return (
+    <Suspense fallback={
+      <main className="bg-background">
+        <Header />
+        <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <Loader2 size={48} className="animate-spin text-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading...</p>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    }>
+      <AboutPageContent />
+    </Suspense>
   )
 }
