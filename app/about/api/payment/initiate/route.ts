@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now()
+  const requestId = crypto.randomUUID()
+  
   try {
+    console.log(`[${new Date().toISOString()}] [${requestId}] Payment Initiation Request Started`)
+    
     const body = await request.json()
     const {
       amount,
@@ -13,8 +18,17 @@ export async function POST(request: NextRequest) {
       orderItems,
     } = body
 
+    console.log(`[${new Date().toISOString()}] [${requestId}] Payment Request Data:`, {
+      amount,
+      payerEmail,
+      payerMobile: payerMobile?.substring(0, 3) + '***', // Mask phone for privacy
+      clientTxnId,
+      hasOrderItems: !!orderItems,
+    })
+
     // Validate required fields
     if (!amount || !payerName || !payerEmail || !payerMobile || !clientTxnId) {
+      console.error(`[${new Date().toISOString()}] [${requestId}] Validation Failed: Missing required fields`)
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -79,12 +93,19 @@ export async function POST(request: NextRequest) {
       bankId: '',
     }
 
+    const duration = Date.now() - startTime
+    console.log(`[${new Date().toISOString()}] [${requestId}] Payment Initiation Success - Duration: ${duration}ms`)
+    
     return NextResponse.json({
       success: true,
       paymentData,
     })
   } catch (error) {
-    console.error('Error initiating payment:', error)
+    const duration = Date.now() - startTime
+    console.error(`[${new Date().toISOString()}] [${requestId}] Payment Initiation Error - Duration: ${duration}ms`, {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    })
     return NextResponse.json(
       { error: 'Failed to initiate payment' },
       { status: 500 }

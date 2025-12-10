@@ -16,17 +16,30 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  const requestId = crypto.randomUUID()
+  const startTime = Date.now()
+  
   try {
     const resolvedParams = params instanceof Promise ? await params : params
+    console.log(`[${new Date().toISOString()}] [${requestId}] GET /api/products/${resolvedParams.id} - Request Started`)
+    
     const product = await getProductById(resolvedParams.id)
     
     if (!product) {
-      console.error('Product not found for id:', resolvedParams.id)
+      const duration = Date.now() - startTime
+      console.error(`[${new Date().toISOString()}] [${requestId}] Product not found - ID: ${resolvedParams.id} - Duration: ${duration}ms`)
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
+    
+    const duration = Date.now() - startTime
+    console.log(`[${new Date().toISOString()}] [${requestId}] GET /api/products/${resolvedParams.id} - Success - Duration: ${duration}ms`)
     return NextResponse.json(product)
   } catch (error) {
-    console.error('Error fetching product:', error)
+    const duration = Date.now() - startTime
+    console.error(`[${new Date().toISOString()}] [${requestId}] GET /api/products/[id] - Error - Duration: ${duration}ms`, {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    })
     return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 })
   }
 }
@@ -35,8 +48,12 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  const requestId = crypto.randomUUID()
+  const startTime = Date.now()
+  
   try {
     const resolvedParams = params instanceof Promise ? await params : params
+    console.log(`[${new Date().toISOString()}] [${requestId}] PATCH /api/products/${resolvedParams.id} - Request Started`)
     const body = await request.json()
 
     const updates: Partial<Omit<ProductDocument, '_id' | 'createdAt' | 'updatedAt'>> = {}
@@ -67,12 +84,20 @@ export async function PATCH(
 
     const updated = await updateProduct(resolvedParams.id, updates)
     if (!updated) {
+      const duration = Date.now() - startTime
+      console.error(`[${new Date().toISOString()}] [${requestId}] Product not found for update - ID: ${resolvedParams.id} - Duration: ${duration}ms`)
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
 
+    const duration = Date.now() - startTime
+    console.log(`[${new Date().toISOString()}] [${requestId}] PATCH /api/products/${resolvedParams.id} - Success - Duration: ${duration}ms`)
     return NextResponse.json(updated)
   } catch (error) {
-    console.error('Error updating product:', error)
+    const duration = Date.now() - startTime
+    console.error(`[${new Date().toISOString()}] [${requestId}] PATCH /api/products/[id] - Error - Duration: ${duration}ms`, {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    })
     return NextResponse.json({ error: 'Failed to update product' }, { status: 500 })
   }
 }
@@ -81,15 +106,29 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  const requestId = crypto.randomUUID()
+  const startTime = Date.now()
+  
   try {
     const resolvedParams = params instanceof Promise ? await params : params
+    console.log(`[${new Date().toISOString()}] [${requestId}] DELETE /api/products/${resolvedParams.id} - Request Started`)
+    
     const deleted = await deleteProduct(resolvedParams.id)
     if (!deleted) {
+      const duration = Date.now() - startTime
+      console.error(`[${new Date().toISOString()}] [${requestId}] Product not found for deletion - ID: ${resolvedParams.id} - Duration: ${duration}ms`)
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
+    
+    const duration = Date.now() - startTime
+    console.log(`[${new Date().toISOString()}] [${requestId}] DELETE /api/products/${resolvedParams.id} - Success - Duration: ${duration}ms`)
     return NextResponse.json({ message: 'Product deleted successfully' })
   } catch (error) {
-    console.error('Error deleting product:', error)
+    const duration = Date.now() - startTime
+    console.error(`[${new Date().toISOString()}] [${requestId}] DELETE /api/products/[id] - Error - Duration: ${duration}ms`, {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    })
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 })
   }
 }
