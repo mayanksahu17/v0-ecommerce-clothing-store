@@ -27,7 +27,8 @@ export async function POST(request: NextRequest) {
     const transUserPassword = process.env.NEXT_PUBLIC_SABPAISA_PASSWORD || 'PRAB96_SP24367'
     const authKey = process.env.NEXT_PUBLIC_SABPAISA_AUTH_KEY || 'SAUWc4kFIy7mTMdUay5iL91vFDYZLvGW91nPJSLMmqg='
     const authIV = process.env.NEXT_PUBLIC_SABPAISA_AUTH_IV || 'VFqeaLPIO0x3TnnE6rDLFqAtrNzVPtgivohLVI90VRWYIKi8834zyey5SIRMz8gc'
-    const env = process.env.NEXT_PUBLIC_SABPAISA_ENV || 'STAG'
+    // Always use PROD environment - no staging
+    const env = 'PROD'
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
 
     // Prepare payment data
@@ -40,12 +41,11 @@ export async function POST(request: NextRequest) {
       payerName,
       payerEmail,
       payerMobile,
-      amount: Math.round(amount * 100) / 100, // Ensure 2 decimal places
-      amountType: 'INR',
+      amount: Number(amount), // Ensure amount is a number
       clientTxnId,
       channelId: 'npm',
       callbackUrl: callbackUrl || `${baseUrl}/payment/response`,
-      env,
+      env: 'PROD', // Always use production
       udf1: orderItems ? JSON.stringify(orderItems) : null,
       udf2: null,
       udf3: null,

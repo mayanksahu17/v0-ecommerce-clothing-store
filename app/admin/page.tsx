@@ -336,7 +336,13 @@ export default function AdminPage() {
               <div>
                 <label className="block text-sm font-light mb-2 text-muted-foreground">Environment</label>
                 <div className="px-4 py-3 bg-input border border-border text-sm">
-                  STAG (Staging)
+                  PROD (Production)
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Payment Gateway URL</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm break-all">
+                  https://securepay.sabpaisa.in/SabPaisa/sabPaisaInit?v=1
                 </div>
               </div>
               <div className="md:col-span-2">
@@ -369,12 +375,12 @@ export default function AdminPage() {
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_PASSWORD</code> - Your SabPaisa password</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_KEY</code> - Authentication key for encryption</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_IV</code> - Authentication IV for encryption</li>
-                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_ENV</code> - Environment: STAG for staging, PROD for production</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_BASE_URL</code> - Your application base URL (e.g., http://localhost:3000)</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_BASE_URL</code> - Your application base URL (e.g., http://localhost:3000)</li>
               </ul>
               <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
                 <p className="text-sm text-yellow-700 dark:text-yellow-400">
-                  <strong>Current Configuration:</strong> Client Code: PRAB96 | Username: prabhash7049@gmail.com | Environment: STAG (Staging)
+                  <strong>Current Configuration:</strong> Client Code: PRAB96 | Username: prabhash7049@gmail.com | Environment: PROD (Production) | Payment URL: https://securepay.sabpaisa.in/SabPaisa/sabPaisaInit?v=1
                 </p>
               </div>
             </div>

@@ -130,7 +130,8 @@ export default function CheckoutPage() {
         const data = await response.json()
 
         if (data.success && data.paymentData) {
-          // Submit payment form to SabPaisa
+          // Use submitPaymentForm from sabpaisa-pg-dev package
+          // The package handles encryption and form submission to production URL
           submitPaymentForm(data.paymentData)
         } else {
           alert("Failed to initiate payment. Please try again.")
