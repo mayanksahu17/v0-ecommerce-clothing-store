@@ -3,33 +3,56 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
-import { products } from "@/lib/mock-data"
 import { Trash2 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { PAYMENT_METHODS } from "@/components/payment-methods"
+import type { Product } from "@/lib/types"
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, hydrated } = useCart()
   const [cartTotal, setCartTotal] = useState(0)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    let total = 0
-    cart.items.forEach((item) => {
-      const product = products.find((p) => p.id === item.productId)
-      if (product) {
-        total += product.price * item.quantity
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products')
+        if (response.ok) {
+          const data = await response.json()
+          setProducts(data)
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false)
       }
-    })
-    setCartTotal(total)
-  }, [cart])
+    }
 
-  if (!hydrated) {
+    if (hydrated) {
+      fetchProducts()
+    }
+  }, [hydrated])
+
+  useEffect(() => {
+    if (products.length > 0) {
+      let total = 0
+      cart.items.forEach((item) => {
+        const product = products.find((p) => p.id === item.productId)
+        if (product) {
+          total += product.price * item.quantity
+        }
+      })
+      setCartTotal(total)
+    }
+  }, [cart, products])
+
+  if (!hydrated || loading) {
     return (
       <main className="bg-background">
         <Header />
         <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">Loading...</div>
+          <div className="max-w-7xl mx-auto text-center">Loading...</div>
         </div>
         <Footer />
       </main>
@@ -137,15 +160,12 @@ export default function CartPage() {
                   {/* Accepted Payment Methods */}
                   <div className="pt-4 border-t border-border space-y-3">
                     <p className="text-xs font-light text-muted-foreground uppercase tracking-wide">We Accept</p>
-                    <div className="flex flex-wrap gap-2">
-                      {PAYMENT_METHODS.map((method) => (
-                        <div
-                          key={method.id}
-                          className={`px-3 py-2 rounded bg-gradient-to-br ${method.color} text-white text-xs font-bold flex items-center justify-center min-w-[50px]`}
-                        >
-                          {method.logo}
-                        </div>
-                      ))}
+                    <div className="flex items-center justify-center p-4 bg-blue-600 rounded">
+                      <img
+                        src="https://sabpaisa.in/wp-content/uploads/2023/06/logo.png"
+                        alt="SabPaisa"
+                        className="h-8 object-contain"
+                      />
                     </div>
                   </div>
 

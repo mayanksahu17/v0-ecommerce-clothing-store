@@ -38,22 +38,22 @@ export function useCart() {
         newItems = [...prev.items, { productId, quantity, size, color }]
       }
 
+      // Calculate total from items (will be recalculated on cart page)
       return {
         items: newItems,
-        total: cart.total + price * quantity,
+        total: 0, // Total will be calculated based on actual product prices
       }
     })
   }
 
   const removeFromCart = (productId: string, size: string, color: string) => {
     setCart((prev) => {
-      const item = prev.items.find((item) => item.productId === productId && item.size === size && item.color === color)
       const newItems = prev.items.filter(
         (item) => !(item.productId === productId && item.size === size && item.color === color),
       )
       return {
         items: newItems,
-        total: Math.max(0, prev.total - (item?.quantity || 0) * 1),
+        total: 0, // Total will be recalculated based on actual product prices
       }
     })
   }
@@ -65,7 +65,7 @@ export function useCart() {
       )
       return {
         items: newItems,
-        total: prev.total,
+        total: 0, // Total will be recalculated based on actual product prices
       }
     })
   }

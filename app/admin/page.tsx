@@ -311,6 +311,75 @@ export default function AdminPage() {
             </button>
           </div>
 
+          {/* SabPaisa Configuration Section */}
+          <div className="bg-secondary p-8 mb-8 border border-border">
+            <h2 className="text-2xl font-light mb-6">SabPaisa Payment Gateway Configuration</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Client Code</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm font-mono">
+                  PRAB96
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Username</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm">
+                  prabhash7049@gmail.com
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Password</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm font-mono">
+                  ••••••••••••
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Environment</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm">
+                  STAG (Staging)
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Authentication Key</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm font-mono break-all">
+                  SAUWc4kFIy7mTMdUay5iL91vFDYZLvGW91nPJSLMmqg=
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Authentication IV</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm font-mono break-all">
+                  VFqeaLPIO0x3TnnE6rDLFqAtrNzVPtgivohLVI90VRWYIKi8834zyey5SIRMz8gc
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Callback URL</label>
+                <div className="px-4 py-3 bg-input border border-border text-sm">
+                  {typeof window !== 'undefined' ? `${window.location.origin}/payment/response` : 'http://localhost:3000/payment/response'}
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 p-4 bg-background border border-border">
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-foreground">Note:</strong> These credentials are configured via environment variables. 
+                To update them, modify the <code className="bg-secondary px-1 py-0.5">.env.local</code> file with the following variables:
+              </p>
+              <ul className="mt-2 text-sm text-muted-foreground list-disc list-inside space-y-1">
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_CLIENT_CODE</code> - Your SabPaisa client code (PRAB96)</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_USERNAME</code> - Your SabPaisa username</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_PASSWORD</code> - Your SabPaisa password</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_KEY</code> - Authentication key for encryption</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_IV</code> - Authentication IV for encryption</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_ENV</code> - Environment: STAG for staging, PROD for production</li>
+                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_BASE_URL</code> - Your application base URL (e.g., http://localhost:3000)</li>
+              </ul>
+              <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">
+                <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                  <strong>Current Configuration:</strong> Client Code: PRAB96 | Username: prabhash7049@gmail.com | Environment: STAG (Staging)
+                </p>
+              </div>
+            </div>
+          </div>
+
           {isFormVisible && (
             <div className="bg-secondary p-8 mb-8 border border-border">
               <div className="flex items-center justify-between mb-6">

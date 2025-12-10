@@ -5,17 +5,21 @@ import type React from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
-import { products } from "@/lib/mock-data"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Check } from "lucide-react"
-import { PaymentMethodSelector, CardInputDisplay } from "@/components/payment-methods"
+import { Check, Loader2 } from "lucide-react"
+import { PaymentMethodSelector } from "@/components/payment-methods"
+import { submitPaymentForm } from "sabpaisa-pg-dev"
+import type { Product } from "@/lib/types"
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart()
   const [cartTotal, setCartTotal] = useState(0)
   const [orderPlaced, setOrderPlaced] = useState(false)
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("visa")
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("sabpaisa")
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,15 +37,35 @@ export default function CheckoutPage() {
   })
 
   useEffect(() => {
-    let total = 0
-    cart.items.forEach((item) => {
-      const product = products.find((p) => p.id === item.productId)
-      if (product) {
-        total += product.price * item.quantity
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products')
+        if (response.ok) {
+          const data = await response.json()
+          setProducts(data)
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error)
+      } finally {
+        setLoading(false)
       }
-    })
-    setCartTotal(total)
-  }, [cart])
+    }
+
+    fetchProducts()
+  }, [])
+
+  useEffect(() => {
+    if (products.length > 0) {
+      let total = 0
+      cart.items.forEach((item) => {
+        const product = products.find((p) => p.id === item.productId)
+        if (product) {
+          total += product.price * item.quantity
+        }
+      })
+      setCartTotal(total)
+    }
+  }, [cart, products])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -62,10 +86,78 @@ export default function CheckoutPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const generateClientTxnId = () => {
+    const timestamp = Date.now()
+    const random = Math.floor(Math.random() * 10000)
+    return `PRAB96-${timestamp}-${random}`
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setOrderPlaced(true)
-    clearCart()
+    
+    if (selectedPaymentMethod === "sabpaisa") {
+      setIsProcessing(true)
+      try {
+        // Prepare order items for UDF
+        const orderItems = cart.items.map((item) => {
+          const product = products.find((p) => p.id === item.productId)
+          return {
+            productId: item.productId,
+            name: product?.name || "Product",
+            quantity: item.quantity,
+            size: item.size,
+            color: item.color,
+            price: product?.price || 0,
+          }
+        })
+
+        // Get payment data from API
+        const response = await fetch("/api/payment/initiate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: cartTotal,
+            payerName: `${formData.firstName} ${formData.lastName}`,
+            payerEmail: formData.email,
+            payerMobile: formData.phone,
+            clientTxnId: generateClientTxnId(),
+            callbackUrl: `${window.location.origin}/payment/response`,
+            orderItems,
+          }),
+        })
+
+        const data = await response.json()
+
+        if (data.success && data.paymentData) {
+          // Submit payment form to SabPaisa
+          submitPaymentForm(data.paymentData)
+        } else {
+          alert("Failed to initiate payment. Please try again.")
+          setIsProcessing(false)
+        }
+      } catch (error) {
+        console.error("Error initiating payment:", error)
+        alert("An error occurred while processing your payment. Please try again.")
+        setIsProcessing(false)
+      }
+    }
+  }
+
+  if (loading) {
+    return (
+      <main className="bg-background">
+        <Header />
+        <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <Loader2 size={48} className="animate-spin text-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Loading checkout...</p>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    )
   }
 
   if (orderPlaced) {
@@ -219,65 +311,30 @@ export default function CheckoutPage() {
 
                   <PaymentMethodSelector selectedMethod={selectedPaymentMethod} onSelect={setSelectedPaymentMethod} />
 
-                  <div className="mt-6">
-                    <CardInputDisplay
-                      cardNumber={formData.cardNumber}
-                      cardholderName={formData.cardholderName}
-                      expiry={formData.expiry}
-                      selectedMethod={selectedPaymentMethod}
-                    />
-                  </div>
-
-                  <div className="space-y-4 mt-6">
-                    <input
-                      type="text"
-                      name="cardholderName"
-                      placeholder="Cardholder Name"
-                      value={formData.cardholderName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
-                    />
-                    <input
-                      type="text"
-                      name="cardNumber"
-                      placeholder="1234 5678 9012 3456"
-                      value={formData.cardNumber}
-                      onChange={handleInputChange}
-                      maxLength={19}
-                      required
-                      className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                      <input
-                        type="text"
-                        name="expiry"
-                        placeholder="MM/YY"
-                        value={formData.expiry}
-                        onChange={handleInputChange}
-                        maxLength={5}
-                        required
-                        className="col-span-1 px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
-                      />
-                      <input
-                        type="text"
-                        name="cvc"
-                        placeholder="CVC"
-                        value={formData.cvc}
-                        onChange={handleInputChange}
-                        maxLength={4}
-                        required
-                        className="col-span-1 px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
-                      />
+                  <div className="mt-6 p-6 bg-secondary border border-border">
+                    <p className="text-sm text-muted-foreground mb-4">
+                      You will be redirected to SabPaisa secure payment gateway to complete your payment.
+                    </p>
+                    <div className="space-y-2 text-sm">
+                      <p className="font-light">Payment Amount: <span className="font-medium">₹{cartTotal.toFixed(2)}</span></p>
+                      <p className="font-light">Payment Method: <span className="font-medium">SabPaisa</span></p>
                     </div>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-foreground text-background hover:bg-accent transition font-light tracking-wide"
+                  disabled={isProcessing}
+                  className="w-full py-4 bg-foreground text-background hover:bg-accent transition font-light tracking-wide disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  Place Order
+                  {isProcessing ? (
+                    <>
+                      <Loader2 size={20} className="animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    "Proceed to Payment"
+                  )}
                 </button>
               </form>
             </div>
