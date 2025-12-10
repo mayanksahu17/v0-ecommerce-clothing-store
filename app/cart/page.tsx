@@ -5,18 +5,14 @@ import { Footer } from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
 import { Trash2 } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import type { Product } from "@/lib/types"
-import { gsap } from "gsap"
 
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, hydrated } = useCart()
   const [cartTotal, setCartTotal] = useState(0)
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const itemsRef = useRef<HTMLDivElement>(null)
-  const summaryRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -51,32 +47,6 @@ export default function CartPage() {
     }
   }, [cart, products])
 
-  useEffect(() => {
-    if (!loading && hydrated && titleRef.current && itemsRef.current && summaryRef.current) {
-      const tl = gsap.timeline()
-      
-      tl.from(titleRef.current, {
-        opacity: 0,
-        y: -30,
-        duration: 0.6,
-        ease: "power3.out"
-      })
-      .from(itemsRef.current.children, {
-        opacity: 0,
-        x: -30,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out"
-      }, "-=0.3")
-      .from(summaryRef.current, {
-        opacity: 0,
-        x: 30,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "-=0.3")
-    }
-  }, [loading, hydrated])
-
   if (!hydrated || loading) {
     return (
       <main className="bg-background">
@@ -95,7 +65,7 @@ export default function CartPage() {
 
       <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 ref={titleRef} className="text-4xl font-light mb-12">Shopping Cart</h1>
+          <h1 className="text-4xl font-light mb-12">Shopping Cart</h1>
 
           {cart.items.length === 0 ? (
             <div className="text-center py-24">
@@ -110,7 +80,7 @@ export default function CartPage() {
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
               {/* Cart Items */}
-              <div ref={itemsRef} className="lg:col-span-2 space-y-6">
+              <div className="lg:col-span-2 space-y-6">
                 {cart.items.map((item) => {
                   const product = products.find((p) => p.id === item.productId)
                   if (!product) return null
@@ -170,7 +140,7 @@ export default function CartPage() {
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <div ref={summaryRef} className="bg-secondary p-8 space-y-6 sticky top-32">
+                <div className="bg-secondary p-8 space-y-6 sticky top-32">
                   <h2 className="text-xl font-light">Order Summary</h2>
                   <div className="space-y-4 text-sm">
                     <div className="flex justify-between">

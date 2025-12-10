@@ -5,13 +5,12 @@ import type React from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Check, Loader2 } from "lucide-react"
 import { PaymentMethodSelector } from "@/components/payment-methods"
 import { submitPaymentForm } from "sabpaisa-pg-dev"
 import type { Product } from "@/lib/types"
-import { gsap } from "gsap"
 
 export default function CheckoutPage() {
   const { cart, clearCart } = useCart()
@@ -21,9 +20,6 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const summaryRef = useRef<HTMLDivElement>(null)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -56,32 +52,6 @@ export default function CheckoutPage() {
 
     fetchProducts()
   }, [])
-
-  useEffect(() => {
-    if (!loading && titleRef.current && formRef.current && summaryRef.current) {
-      const tl = gsap.timeline()
-      
-      tl.from(titleRef.current, {
-        opacity: 0,
-        y: -30,
-        duration: 0.6,
-        ease: "power3.out"
-      })
-      .from(formRef.current.children, {
-        opacity: 0,
-        x: -30,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out"
-      }, "-=0.3")
-      .from(summaryRef.current, {
-        opacity: 0,
-        x: 30,
-        duration: 0.5,
-        ease: "power2.out"
-      }, "-=0.3")
-    }
-  }, [loading])
 
   useEffect(() => {
     if (products.length > 0) {
@@ -233,12 +203,12 @@ export default function CheckoutPage() {
 
       <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <h1 ref={titleRef} className="text-4xl font-light mb-12">Checkout</h1>
+          <h1 className="text-4xl font-light mb-12">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Checkout Form */}
             <div className="lg:col-span-2">
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-8">
+              <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Shipping Information */}
                 <div className="space-y-6 pb-8 border-b border-border">
                   <h2 className="text-xl font-light">Shipping Information</h2>
@@ -356,7 +326,7 @@ export default function CheckoutPage() {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div ref={summaryRef} className="bg-secondary p-8 sticky top-32 space-y-6">
+              <div className="bg-secondary p-8 sticky top-32 space-y-6">
                 <h2 className="text-xl font-light">Order Summary</h2>
                 <div className="space-y-4 max-h-96 overflow-y-auto">
                   {cart.items.map((item) => {
