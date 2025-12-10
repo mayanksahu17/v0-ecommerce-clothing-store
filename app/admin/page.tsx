@@ -358,10 +358,13 @@ export default function AdminPage() {
                 </div>
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-light mb-2 text-muted-foreground">Callback URL</label>
+                <label className="block text-sm font-light mb-2 text-muted-foreground">Callback URL (Whitelisted)</label>
                 <div className="px-4 py-3 bg-input border border-border text-sm">
-                  {typeof window !== 'undefined' ? `${window.location.origin}/payment/response` : 'http://localhost:3000/payment/response'}
+                  https://madhuea.store/about
                 </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Using whitelisted domain: madhuea.store/about
+                </p>
               </div>
             </div>
             <div className="mt-6 p-4 bg-background border border-border">
@@ -375,7 +378,6 @@ export default function AdminPage() {
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_PASSWORD</code> - Your SabPaisa password</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_KEY</code> - Authentication key for encryption</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_SABPAISA_AUTH_IV</code> - Authentication IV for encryption</li>
-                <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_BASE_URL</code> - Your application base URL (e.g., http://localhost:3000)</li>
                 <li><code className="bg-secondary px-1 py-0.5">NEXT_PUBLIC_BASE_URL</code> - Your application base URL (e.g., http://localhost:3000)</li>
               </ul>
               <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded">

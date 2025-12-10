@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       amount: Number(amount), // Ensure amount is a number
       clientTxnId,
       channelId: 'npm',
-      callbackUrl: callbackUrl || `${baseUrl}/payment/response`,
+      callbackUrl: callbackUrl || 'https://madhuea.store/about',
       env: 'PROD', // Always use production
       udf1: orderItems ? JSON.stringify(orderItems) : null,
       udf2: null,

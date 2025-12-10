@@ -55,14 +55,14 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     if (products.length > 0) {
-      let total = 0
-      cart.items.forEach((item) => {
-        const product = products.find((p) => p.id === item.productId)
-        if (product) {
-          total += product.price * item.quantity
-        }
-      })
-      setCartTotal(total)
+    let total = 0
+    cart.items.forEach((item) => {
+      const product = products.find((p) => p.id === item.productId)
+      if (product) {
+        total += product.price * item.quantity
+      }
+    })
+    setCartTotal(total)
     }
   }, [cart, products])
 
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
             payerEmail: formData.email,
             payerMobile: formData.phone,
             clientTxnId: generateClientTxnId(),
-            callbackUrl: `${window.location.origin}/payment/response`,
+            callbackUrl: 'https://madhuea.store/about',
             orderItems,
           }),
         })
@@ -280,13 +280,13 @@ export default function CheckoutPage() {
                       className="col-span-1 px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
                     />
                   </div>
-                  <input
-                    type="text"
-                    name="zip"
-                    placeholder="ZIP Code"
-                    value={formData.zip}
-                    onChange={handleInputChange}
-                    required
+                    <input
+                      type="text"
+                      name="zip"
+                      placeholder="ZIP Code"
+                      value={formData.zip}
+                      onChange={handleInputChange}
+                      required
                     className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
                   />
                 </div>
