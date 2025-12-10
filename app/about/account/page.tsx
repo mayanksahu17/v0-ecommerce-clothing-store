@@ -29,7 +29,7 @@ export default function AccountPage() {
                     Sign in to your account to view order history, saved addresses, and manage your preferences.
                   </p>
                   <Link
-                    href="/contact"
+                    href="/about/contact"
                     className="inline-block px-6 py-2 bg-foreground text-background hover:bg-accent transition text-sm"
                   >
                     Sign In / Create Account
@@ -43,23 +43,23 @@ export default function AccountPage() {
               <h2 className="text-2xl font-light mb-4">Quick Links</h2>
               <ul className="space-y-3 text-sm">
                 <li>
-                  <Link href="/cart" className="hover:underline flex items-center justify-between">
+                  <Link href="/about/cart" className="hover:underline flex items-center justify-between">
                     <span>Shopping Cart</span>
                     <span className="text-muted-foreground">({cart.items.length} items)</span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/policies/return-exchange" className="hover:underline">
+                  <Link href="/about/policies/return-exchange" className="hover:underline">
                     Return/Exchange Items
                   </Link>
                 </li>
                 <li>
-                  <Link href="/policies/shipping" className="hover:underline">
+                  <Link href="/about/policies/shipping" className="hover:underline">
                     Track Your Order
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="hover:underline">
+                  <Link href="/about/contact" className="hover:underline">
                     Contact Support
                   </Link>
                 </li>
@@ -74,7 +74,7 @@ export default function AccountPage() {
                   You don't have any orders yet. Start shopping to see your order history here.
                 </p>
                 <Link
-                  href="/shop"
+                  href="/about/shop"
                   className="inline-block px-6 py-2 bg-foreground text-background hover:bg-accent transition text-sm"
                 >
                   Browse Products
@@ -92,7 +92,7 @@ export default function AccountPage() {
                     Manage how you receive updates about new products, promotions, and order updates.
                   </p>
                   <Link
-                    href="/contact"
+                    href="/about/contact"
                     className="text-sm underline hover:text-accent"
                   >
                     Update Email Preferences
@@ -104,7 +104,7 @@ export default function AccountPage() {
                     Review our privacy policy and manage your account security settings.
                   </p>
                   <Link
-                    href="/policies/privacy"
+                    href="/about/policies/privacy"
                     className="text-sm underline hover:text-accent"
                   >
                     View Privacy Policy

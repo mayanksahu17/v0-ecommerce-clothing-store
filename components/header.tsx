@@ -27,13 +27,13 @@ export function Header() {
             <Link href="/" className="text-sm font-light hover:text-accent transition">
               Home
             </Link>
-            <Link href="/shop" className="text-sm font-light hover:text-accent transition">
+            <Link href="/about/shop" className="text-sm font-light hover:text-accent transition">
               Shop
             </Link>
             <Link href="/about" className="text-sm font-light hover:text-accent transition">
               About Us
             </Link>
-            <Link href="/contact" className="text-sm font-light hover:text-accent transition">
+            <Link href="/about/contact" className="text-sm font-light hover:text-accent transition">
               Contact Us
             </Link>
           </nav>
@@ -43,7 +43,7 @@ export function Header() {
             <button className="p-2 hover:text-accent transition">
               <Search size={20} />
             </button>
-            <Link href="/cart" className="relative p-2 hover:text-accent transition">
+            <Link href="/about/cart" className="relative p-2 hover:text-accent transition">
               <ShoppingCart size={20} />
               {cartCount > 0 && (
                 <span className="absolute top-1 right-1 w-4 h-4 bg-foreground text-background text-xs flex items-center justify-center rounded-full">
@@ -66,13 +66,13 @@ export function Header() {
             <Link href="/" className="block text-sm font-light hover:text-accent transition">
               Home
             </Link>
-            <Link href="/shop" className="block text-sm font-light hover:text-accent transition">
+            <Link href="/about/shop" className="block text-sm font-light hover:text-accent transition">
               Shop
             </Link>
             <Link href="/about" className="block text-sm font-light hover:text-accent transition">
               About Us
             </Link>
-            <Link href="/contact" className="block text-sm font-light hover:text-accent transition">
+            <Link href="/about/contact" className="block text-sm font-light hover:text-accent transition">
               Contact Us
             </Link>
           </nav>

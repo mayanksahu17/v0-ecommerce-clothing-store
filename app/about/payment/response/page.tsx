@@ -69,7 +69,7 @@ export default function PaymentResponsePage() {
             </div>
             <h1 className="text-4xl font-light">Payment Error</h1>
             <p className="text-muted-foreground">{error}</p>
-            <Link href="/checkout" className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition">
+            <Link href="/about/checkout" className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition">
               Return to Checkout
             </Link>
           </div>
@@ -190,7 +190,7 @@ export default function PaymentResponsePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {isSuccess ? (
               <Link
-                href="/"
+                href="/about"
                 className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition text-center"
               >
                 Continue Shopping
@@ -198,13 +198,13 @@ export default function PaymentResponsePage() {
             ) : (
               <>
                 <Link
-                  href="/checkout"
+                  href="/about/checkout"
                   className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition text-center"
                 >
                   Try Again
                 </Link>
                 <Link
-                  href="/"
+                  href="/about"
                   className="inline-block px-8 py-3 border border-border hover:bg-secondary transition text-center"
                 >
                   Back to Home

@@ -11,27 +11,27 @@ export function Footer() {
             <h3 className="font-bold text-sm mb-4">Shop</h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/shop?category=tops" className="hover:underline text-foreground">
+                <Link href="/about/shop?category=tops" className="hover:underline text-foreground">
                   Shirt
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=outerwear" className="hover:underline text-foreground">
+                <Link href="/about/shop?category=outerwear" className="hover:underline text-foreground">
                   Overshirts & Shackets
                 </Link>
               </li>
               <li>
-                <Link href="/shop" className="hover:underline text-foreground">
+                <Link href="/about/shop" className="hover:underline text-foreground">
                   Co-ord Sets
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=bottoms" className="hover:underline text-foreground">
+                <Link href="/about/shop?category=bottoms" className="hover:underline text-foreground">
                   Shorts
                 </Link>
               </li>
               <li>
-                <Link href="/shop?category=bottoms" className="hover:underline text-foreground">
+                <Link href="/about/shop?category=bottoms" className="hover:underline text-foreground">
                   Trousers
                 </Link>
               </li>
@@ -43,22 +43,22 @@ export function Footer() {
             <h3 className="font-bold text-sm mb-4">Customer Support</h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/account" className="hover:underline text-foreground">
+                <Link href="/about/account" className="hover:underline text-foreground">
                   My Account
                 </Link>
               </li>
               <li>
-                <Link href="/policies/refund" className="hover:underline text-foreground">
+                <Link href="/about/policies/refund" className="hover:underline text-foreground">
                   Return Policy
                 </Link>
               </li>
               <li>
-                <Link href="/policies/return-exchange" className="hover:underline text-foreground">
+                <Link href="/about/policies/return-exchange" className="hover:underline text-foreground">
                   Return/Exchange
                 </Link>
               </li>
               <li>
-                <Link href="/policies/shipping" className="hover:underline text-foreground">
+                <Link href="/about/policies/shipping" className="hover:underline text-foreground">
                   Shipping Policy
                 </Link>
               </li>
@@ -70,22 +70,22 @@ export function Footer() {
             <h3 className="font-bold text-sm mb-4">Help</h3>
             <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/faq" className="hover:underline text-foreground">
+                <Link href="/about/faq" className="hover:underline text-foreground">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:underline text-foreground">
+                <Link href="/about/contact" className="hover:underline text-foreground">
                   Contact us
                 </Link>
               </li>
               <li>
-                <Link href="/policies/privacy" className="hover:underline text-foreground">
+                <Link href="/about/policies/privacy" className="hover:underline text-foreground">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/policies/terms" className="hover:underline text-foreground">
+                <Link href="/about/policies/terms" className="hover:underline text-foreground">
                   Terms of Services
                 </Link>
               </li>

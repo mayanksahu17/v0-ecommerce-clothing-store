@@ -38,7 +38,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products')
+        const response = await fetch('/about/api/products')
         if (response.ok) {
           const data = await response.json()
           setProducts(data)
@@ -111,7 +111,7 @@ export default function CheckoutPage() {
         })
 
         // Get payment data from API
-        const response = await fetch("/api/payment/initiate", {
+        const response = await fetch("/about/api/payment/initiate", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
                 <p>Payment: {selectedPaymentMethod.toUpperCase()}</p>
               </div>
             </div>
-            <Link href="/" className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition">
+            <Link href="/about" className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition">
               Back to Home
             </Link>
           </div>

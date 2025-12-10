@@ -146,7 +146,7 @@ export default function AdminPage() {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch('/about/api/products')
       const data = await response.json()
       setProducts(data)
     } catch (error) {
@@ -160,7 +160,7 @@ export default function AdminPage() {
     if (!confirm('Are you sure you want to delete this product?')) return
 
     try {
-      const response = await fetch(`/api/products/${id}`, {
+      const response = await fetch(`/about/api/products/${id}`, {
         method: 'DELETE',
       })
       if (response.ok) {
@@ -192,7 +192,7 @@ export default function AdminPage() {
       const formData = new FormData()
       formData.append('file', selectedFile)
 
-      const response = await fetch('/api/upload', {
+      const response = await fetch('/about/api/upload', {
         method: 'POST',
         body: formData,
       })
@@ -260,7 +260,7 @@ export default function AdminPage() {
     }
 
     try {
-      const endpoint = isEditing && editingProductId ? `/api/products/${editingProductId}` : '/api/products'
+      const endpoint = isEditing && editingProductId ? `/about/api/products/${editingProductId}` : '/about/api/products'
       const method = isEditing ? 'PATCH' : 'POST'
       const response = await fetch(endpoint, {
         method,

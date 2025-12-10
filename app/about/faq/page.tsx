@@ -120,7 +120,7 @@ export default function FAQPage() {
               <h2 className="text-2xl font-light">Still have questions?</h2>
               <p className="text-sm text-muted-foreground">
                 If you have any other questions, please don't hesitate to{" "}
-                <a href="/contact" className="underline hover:text-accent">
+                <a href="/about/contact" className="underline hover:text-accent">
                   contact us
                 </a>
                 . We're here to help!

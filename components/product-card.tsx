@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export function ProductCard({ id, name, price, image, rating, reviews }: ProductCardProps) {
   return (
-    <Link href={`/product/${id}`}>
+    <Link href={`/about/product/${id}`}>
       <div className="group cursor-pointer">
         <div className="relative bg-secondary overflow-hidden mb-4">
           <img

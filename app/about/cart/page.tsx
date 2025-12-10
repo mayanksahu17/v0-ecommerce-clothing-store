@@ -17,7 +17,7 @@ export default function CartPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products')
+        const response = await fetch('/about/api/products')
         if (response.ok) {
           const data = await response.json()
           setProducts(data)
@@ -71,7 +71,7 @@ export default function CartPage() {
             <div className="text-center py-24">
               <p className="text-muted-foreground mb-6">Your cart is empty</p>
               <Link
-                href="/shop"
+                href="/about/shop"
                 className="inline-block px-8 py-3 bg-foreground text-background hover:bg-accent transition"
               >
                 Continue Shopping
@@ -170,13 +170,13 @@ export default function CartPage() {
                   </div>
 
                   <Link
-                    href="/checkout"
+                    href="/about/checkout"
                     className="block w-full py-3 bg-foreground text-background text-center hover:bg-accent transition font-light"
                   >
                     Proceed to Checkout
                   </Link>
                   <Link
-                    href="/shop"
+                    href="/about/shop"
                     className="block w-full py-3 border border-border text-center hover:bg-secondary transition font-light"
                   >
                     Continue Shopping

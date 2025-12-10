@@ -16,7 +16,7 @@ export default function SupportPage() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <Link href="/contact">
+            <Link href="/about/contact">
               <div className="bg-secondary p-8 space-y-4 hover:bg-muted transition cursor-pointer h-full">
                 <MessageSquare size={32} className="text-foreground" />
                 <h3 className="text-lg font-light">Send Us a Message</h3>
@@ -38,7 +38,7 @@ export default function SupportPage() {
               <p className="text-xs text-muted-foreground">Mon - Fri: 9AM - 6PM EST</p>
             </div>
 
-            <Link href="/policies/shipping">
+            <Link href="/about/policies/shipping">
               <div className="bg-secondary p-8 space-y-4 hover:bg-muted transition cursor-pointer h-full">
                 <Truck size={32} className="text-foreground" />
                 <h3 className="text-lg font-light">Shipping Information</h3>
@@ -71,7 +71,7 @@ export default function SupportPage() {
                 <h3 className="text-lg font-light mb-2">What is your return policy?</h3>
                 <p className="text-sm text-muted-foreground">
                   We offer a 30-day return policy for unused items in original condition. Visit our{" "}
-                  <Link href="/policies/refund" className="hover:text-accent transition">
+                  <Link href="/about/policies/refund" className="hover:text-accent transition">
                     refund policy
                   </Link>{" "}
                   for more details.
@@ -82,7 +82,7 @@ export default function SupportPage() {
                 <p className="text-sm text-muted-foreground">
                   Yes, we ship to select countries. International orders may be subject to customs duties and taxes. See
                   our{" "}
-                  <Link href="/policies/shipping" className="hover:text-accent transition">
+                  <Link href="/about/policies/shipping" className="hover:text-accent transition">
                     shipping policy
                   </Link>{" "}
                   for more information.

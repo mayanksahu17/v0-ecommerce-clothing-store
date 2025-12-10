@@ -35,7 +35,7 @@ export default function ProductPage() {
     }
     
     try {
-      const response = await fetch(`/api/products/${productId}`)
+      const response = await fetch(`/about/api/products/${productId}`)
       const data = await response.json()
       
       if (response.ok && data && !data.error) {
@@ -67,7 +67,7 @@ export default function ProductPage() {
 
   const fetchAllProducts = async () => {
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch('/about/api/products')
       if (response.ok) {
         const data = await response.json()
         setAllProducts(data)
