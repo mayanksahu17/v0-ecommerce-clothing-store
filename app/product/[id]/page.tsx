@@ -5,10 +5,14 @@ import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
 import { products as mockProducts } from "@/lib/mock-data"
 import { useCart } from "@/hooks/use-cart"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Star, Heart, Share2 } from "lucide-react"
 import { useParams } from "next/navigation"
 import type { Product } from "@/lib/types"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function ProductPage() {
   const params = useParams()
@@ -22,6 +26,9 @@ export default function ProductPage() {
   const [selectedColor, setSelectedColor] = useState("")
   const [quantity, setQuantity] = useState(1)
   const [isAdded, setIsAdded] = useState(false)
+  const imageRef = useRef<HTMLDivElement>(null)
+  const detailsRef = useRef<HTMLDivElement>(null)
+  const relatedRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetchProduct()
@@ -120,6 +127,42 @@ export default function ProductPage() {
 
   const relatedProducts = allProducts.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4)
 
+  useEffect(() => {
+    if (!loading && product && imageRef.current && detailsRef.current) {
+      const tl = gsap.timeline()
+      
+      tl.from(imageRef.current, {
+        opacity: 0,
+        x: -50,
+        duration: 0.8,
+        ease: "power3.out"
+      })
+      .from(detailsRef.current.children, {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out"
+      }, "-=0.4")
+    }
+  }, [loading, product])
+
+  useEffect(() => {
+    if (relatedRef.current && relatedProducts.length > 0) {
+      gsap.from(relatedRef.current.children, {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: relatedRef.current,
+          start: "top 80%",
+        }
+      })
+    }
+  }, [relatedProducts])
+
   return (
     <main className="bg-background">
       <Header />
@@ -129,7 +172,7 @@ export default function ProductPage() {
           {/* Product */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-24">
             {/* Images */}
-            <div className="space-y-4">
+            <div ref={imageRef} className="space-y-4">
               <div className="bg-secondary aspect-square overflow-hidden">
                 <img
                   src={product.images && product.images.length > 0 ? (product.images[selectedImage] || product.image) : (product.image || "/placeholder.svg")}
@@ -155,7 +198,7 @@ export default function ProductPage() {
             </div>
 
             {/* Details */}
-            <div className="space-y-8">
+            <div ref={detailsRef} className="space-y-8">
               <div>
                 <h1 className="text-4xl font-light mb-4">{product.name}</h1>
                 <div className="flex items-center gap-4 mb-4">
@@ -266,7 +309,7 @@ export default function ProductPage() {
           {relatedProducts.length > 0 && (
             <div className="border-t border-border pt-24">
               <h2 className="text-3xl font-light mb-12">You Might Also Like</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div ref={relatedRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {relatedProducts.map((prod) => (
                   <ProductCard key={prod.id} {...prod} />
                 ))}

@@ -6,12 +6,20 @@ import { ProductCard } from "@/components/product-card"
 import { products as mockProducts, categories } from "@/lib/mock-data"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import type { Product } from "@/lib/types"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const heroContentRef = useRef<HTMLDivElement>(null)
+  const categoriesRef = useRef<HTMLElement>(null)
+  const productsRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     fetchProducts()
@@ -37,6 +45,51 @@ export default function Home() {
   const featuredProducts = products.slice(0, 4)
   const newArrivals = products.slice(4, 8)
 
+  useEffect(() => {
+    if (!loading && heroContentRef.current) {
+      gsap.from(heroContentRef.current.children, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
+        delay: 0.3
+      })
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (categoriesRef.current) {
+      gsap.from(categoriesRef.current.children, {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: categoriesRef.current,
+          start: "top 80%",
+        }
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (productsRef.current && products.length > 0) {
+      gsap.from(productsRef.current.children, {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: productsRef.current,
+          start: "top 80%",
+        }
+      })
+    }
+  }, [products, loading])
+
   return (
     <main className="bg-background">
       <Header />
@@ -61,9 +114,9 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/30"></div>
         
         {/* Content */}
-        <div className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div ref={heroRef} className="relative z-10 h-full flex items-center justify-center px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="max-w-2xl space-y-6 text-white">
+            <div ref={heroContentRef} className="max-w-2xl space-y-6 text-white">
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-light leading-tight">
                 Minimal fashion for the modern lifestyle
               </h1>
@@ -84,7 +137,7 @@ export default function Home() {
       </section>
 
       {/* Categories */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary">
+      <section ref={categoriesRef} className="py-16 px-4 sm:px-6 lg:px-8 bg-secondary">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light mb-12 text-center">Shop by Category</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -144,7 +197,7 @@ export default function Home() {
       </section>
 
       {/* New Arrivals */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8">
+      <section ref={productsRef} className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-light mb-12">New Arrivals</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
