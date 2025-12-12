@@ -222,8 +222,8 @@ export default function AdminPage() {
       return
     }
 
-    if (priceValue < 2599) {
-      alert('Price must be at least ₹2599')
+    if (priceValue < 0) {
+      alert('Price must be greater than or equal to 0')
       return
     }
 
@@ -425,7 +425,7 @@ export default function AdminPage() {
                     <input
                       type="number"
                       required
-                      min="2599"
+                      min="0"
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       className="w-full px-4 py-3 bg-input border border-border text-sm focus:outline-none focus:ring-1 focus:ring-foreground"
